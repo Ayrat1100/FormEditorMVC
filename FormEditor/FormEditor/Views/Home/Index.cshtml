@@ -1,0 +1,102 @@
+﻿@model FormEditor.Models.Form
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="~/Content/css/main.css">
+    <title>Form Editor</title>
+</head>
+<body>
+    <div class="container">
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+            <div class="col-md-10 offset-sm-2">
+                <h3><label for="header-form">Редактирование формы</label></h3>
+                <div class="col-md-7">
+                    <div class="row form-group">
+                        @*<input type="text" aria-label="Large" name="Name" class="form-control" placeholder="Имя формы">*@
+                        @Html.TextBoxFor(o => o.Name, new { @class = "form-control", placeholder = "Имя формы", name = "Name" })
+                        @Html.ValidationMessageFor(o => o.Name, "", new { @style = "color:red" })
+                    </div>
+                    <div class="row form-group">
+                        <textarea class="form-control" name="Description" placeholder="Описание формы" rows="1"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="formContainer">
+                        @for (int i = 0; i < Model.Blocks.Count; i++)
+                        {
+                        <div class="row form-group block">
+                            <dirow class="card card-body border-dark">
+                                <div class="row form-group text-dark">
+                                    <div class="col-md-5">
+                                        @Html.TextBoxFor(o => o.Blocks[i].Header, new { @class = "form-control headerInput", type = "text", placeholder = "Заголовок поля" })
+                                        @Html.ValidationMessageFor(o => o.Blocks[i].Header, "", new { @style = "color:red" })
+                                    </div>
+                                    <div class="col-md-5 select">
+                                        @Html.DropDownListFor(Model => Model.Blocks[i].SelectedField, Model.Blocks[i].Fields.Select(
+             x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Title }
+                                       ), new { @class= "custom-select" })
+                                    </div>
+                                    <div class="col">
+                                        <div class="d-flex justify-content-end">
+                                            <a class="delete" href="#"><img src="/Content/images/icons8-delete-filled.svg"  ></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group text-dark">
+                                    <div class="col questEl">
+                                        @if ((Model.Blocks[i].SelectedField) == 1 || (Model.Blocks[i].SelectedField) == 2)
+                                        {
+                                            @Html.TextBoxFor(o => o.Blocks[i].TextField, new { @class = "form-control blockArea", name = "Blocks[" + i + "].TextField", rows = "2",type ="text" })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextAreaFor(o => o.Blocks[i].TextField, new { @class = "form-control blockArea", name = "Blocks[" + i + "].TextField", rows = "2" })
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row check-style justify-content-end">
+                                    <div class="custom-control custom-checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(o => o.Blocks[i].Mandatory, new { @checked = "checked", @class = "checkboxMand", type = "checkbox" })
+                                            Обязательный вопрос
+                                        </label>
+                                    </div>
+                                </div>
+                            </dirow>
+                        </div>
+                        }
+                    </div>
+                    <div class="row form-group justify-content-end">
+                        <a id="addField" href="#">+Добавить поле</a>
+                    </div>
+                    <div class="d-flex  justify-content-end">
+                        <div class="row">
+                            <button type="button" class="btn btn-style btn-danger justify-content-end">Закрыть</button>
+                            <button type="submit" class="btn btn-style btn-success">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="~/Scripts/popper.min.js" crossorigin="anonymous"></script>
+    <script src="~/Scripts/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="~/Scripts/Js/main.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+</body>
+</html>
