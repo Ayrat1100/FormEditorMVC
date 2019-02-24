@@ -16,19 +16,10 @@ namespace FormEditor.Models
         [Required(ErrorMessage = "Поле обязательно для заполнения!")]
         public string Header { get; set; }
 
-        public int SelectedField { get; set; }
-
         public string TextField { get; set; }
 
         public bool Mandatory { get; set; }
 
-        public IEnumerable<Field> Fields { get; set; } = new List<Field>()
-                      {
-                          new Field { Id = 1, Title = "Текст - строка" },
-                          new Field { Id = 2, Title = "Текст - абзац" },
-                          new Field { Id = 3, Title = "Один из списка" },
-                          new Field { Id = 4, Title = "Несколько из списка" },
-                          new Field { Id = 5, Title = "Раскрывающийся список" }
-                      };
+        public string SelectedTypeField { get; set; }
     }
 }

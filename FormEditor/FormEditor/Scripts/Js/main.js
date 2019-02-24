@@ -1,18 +1,24 @@
 ﻿"use strict";
 /*globals $:false */
-var counter = 1;
+var parentElement = document.getElementsByClassName("formContainer")[0].getElementsByClassName("row form-group")[0];
 
+function SetSelectHundler() {
+    var currentCloseBtn = document.querySelectorAll('.custom-select');
+
+    for (var i = currentCloseBtn.length - 1; i >= 0; i--) {
+        currentCloseBtn[i].addEventListener("change", ChangeHundler);
+    }
+}
 $().ready(function () {
-
     // add/remove block(s)
-
     $(".delete").click(RemoveBlock);
     $("#addField").click(AddBlock);
-    $(".custom-select").click(SetSelectChanged);
+    SetSelectHundler();
 });
 
+RecalculateIndexes();
 function SetSelectChanged() {
-    ChangeHundler(this);
+    ChangeHundler();
 }
 
 function FindParent(el, cl) {
@@ -25,101 +31,76 @@ function FindParent(el, cl) {
     return elem;
 }
 
-function RemoveBlock() {
-    FindParent(this, "row form-group block").remove();
-    RecalculateIndexes();
+function RemoveBlock()
+{
+    if (document.getElementsByClassName("row form-group block").length === 1)
+    {
+        return;
+    }
+    else
+    {
+        FindParent(this, "row form-group block").remove();
+        RecalculateIndexes();
+    }
 }
 
 function AddBlock() {
-    $('.formContainer').append(
-        '<div class="row form-group block">' +
-        '<div class="card card-body border-dark">' +
-        '<div class="row form-group text-dark">' +
-        '<div class="col-md-5">' +
-        '<input type="text" class="form-control headerInput" placeholder="Заголовок поля">' +
-        '</div>' +
-        '<div class="col-md-5">' +
-        '<select class="custom-select" data-val="true" name="Blocks[' + counter + '].FieldType">' +
-        '<option value="1">Текст - строка</option>' +
-        '<option value="2">Текст - абзац</option>' +
-        '<option selected  value="3">Один из списка</option>' +
-        '<option value="4">Несколько из списка</option>' +
-        '<option value="5">Раскрывающийся список</option>' +
-        '</select>' +
-        '</div>' +
-        '<div class="col">' +
-        '<div class="d-flex justify-content-end">' +
-        '<a class="delete" href="#"><img src="/Content/images/icons8-delete-filled.svg"></a>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '<div class="row form-group text-dark">' +
-        '<div class="col questEl">' +
-        '<textarea name="Blocks[' + counter + '].TextField" id="Blocks_' + counter + '__TextField" class="form-control blockArea"  rows="2"></textarea>' +
-        '</div>' +
-        '</div>' +
-        '<div class="row check-style justify-content-end">' +
-        '<div class="custom-control custom-checkbox ">' +
-        '<label>' +
-        '<input type="checkbox" class="checkboxMand" checked = "checked" value="true">' +
-        '<input name="Blocks[' + counter + '].Mandatory" type="hidden" value="false">'+
-        'Обязательный вопрос</label>' +
-        '</div>' +
-        '</div>' +
-        '</div> ' +
-        '</div>'
-    );
-    counter++;
+    var copyElement = parentElement.cloneNode(true);
+    copyElement.getElementsByClassName("form-control headerInput")[0].value = "";
+    copyElement.getElementsByClassName("form-control blockArea")[0].value = "";
+    copyElement.getElementsByClassName("checkboxMand")[0].checked = false;
+    $('.formContainer').append(copyElement);
     $(".delete").click(RemoveBlock);
-    $(".custom-select").click(SetSelectChanged);
-    window.scrollTo(0, document.body.scrollHeight);
+    SetSelectHundler();
     RecalculateIndexes();
-    //RecalculateIndexes();
+    window.scrollTo(0, document.body.scrollHeight);
+    return false;
 }
 
 
-function ChangeHundler(thisEl) {
+function ChangeHundler() {
     var textareaIndex = new Set([3, 4, 5]);
     var placeholderIndex = new Set([1, 2]);
-    var findOldEl = FindParent(thisEl, "row form-group block").getElementsByClassName("col questEl")[0];
+    var findOldEl = FindParent(this, "row form-group block").getElementsByClassName("col questEl")[0];
+    var inputText = findOldEl.getElementsByClassName("form-control blockArea")[0].value;
 
-
-    if (textareaIndex.has(+thisEl.value)) {
-        findOldEl.replaceChild(CreateTextarea(), findOldEl.children[0]);
+    if (textareaIndex.has(+this.value)) {
+        findOldEl.replaceChild(CreateTextarea(inputText), findOldEl.children[0]);
         RecalculateIndexes();
         return;
     }
 
-    if (placeholderIndex.has(+thisEl.value)) {
-        findOldEl.replaceChild(CreateInput(), findOldEl.children[0]);
+    if (placeholderIndex.has(+this.value)) {
+        findOldEl.replaceChild(CreateInput(inputText), findOldEl.children[0]);
         RecalculateIndexes();
         return;
     }
 }
-function CreateInput() {
+function CreateInput(inputText) {
     var element = document.createElement("input");
     element.setAttribute("class", "form-control blockArea");
+    element.setAttribute("name", "Blocks[0].TextField");
     element.setAttribute("rows", "2");
+    element.value = inputText;
     return element;
 }
 
-function CreateTextarea() {
+function CreateTextarea(inputText) {
     var element = document.createElement("textarea");
     element.setAttribute("class", "form-control blockArea");
+    element.setAttribute("name", "Blocks[0].TextField");
     element.setAttribute("rows", "2");
+    element.value = inputText;
     return element;
 }
-
 
 function RecalculateIndexes() {
     var blocks = document.getElementsByClassName("formContainer")[0].getElementsByClassName("row form-group block");
 
     for (var i = blocks.length - 1; i >= 0; i--) {
-        blocks[i].getElementsByClassName("form-control headerInput")[0].setAttribute("name", "Blocks[" + i + "].Header");
-
-        blocks[i].getElementsByClassName("custom-select")[0].setAttribute("name", "Blocks[" + i + "].FieldType");
+        blocks[i].getElementsByClassName("form-control headerInput")[0].setAttribute("name", "Blocks[" + i +"].Header");
+        blocks[i].getElementsByClassName("custom-select")[0].setAttribute("name", "Blocks[" + i + "].SelectedTypeField");
         blocks[i].getElementsByClassName("form-control blockArea")[0].setAttribute("name", "Blocks[" + i + "].TextField");
-        blocks[i].getElementsByClassName("checkboxMand")[0].setAttribute("name", "Blocks[" + i + "].Mandatory");
-
+        blocks[i].getElementsByClassName("checkboxMand")[0].setAttribute("name", "Blocks[" + i +"].Mandatory");
     }
 }
