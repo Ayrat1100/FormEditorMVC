@@ -4,15 +4,12 @@
 
 namespace FormEditor.Models
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
 
     public class Block
     {
+        public int BlockId { get; set; }
+
         [Required(ErrorMessage = "Поле обязательно для заполнения!")]
         public string Header { get; set; }
 
@@ -20,6 +17,9 @@ namespace FormEditor.Models
 
         public bool Mandatory { get; set; }
 
-        public string SelectedTypeField { get; set; }
+        public Form Form { get; set; }
+
+        public FieldsType FieldsType { get; set; }
+
     }
 }

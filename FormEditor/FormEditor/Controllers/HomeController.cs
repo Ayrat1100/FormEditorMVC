@@ -6,21 +6,27 @@ namespace FormEditor.Controllers
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
     using FormEditor.Models;
+    using FormContext = Models.FormContext;
 
     public class HomeController : Controller
     {
+        private readonly FieldsType fieldsType;
         private Form form;
+        private FormContext formContext = new FormContext();
 
         public ActionResult Index()
         {
             this.form = new Form();
             Block block = new Block();
-            block.SelectedTypeField = "4";
+            block.FieldsType = FieldsType.SeveralFromTheList;
             this.form.Blocks = new List<Block>();
             this.form.Blocks.Add(block);
+            this.ViewBag.ListItems = this.fieldsType;
+
             return this.View(this.form);
         }
 
@@ -30,9 +36,16 @@ namespace FormEditor.Controllers
             this.RemoveData(form);
             if (this.ModelState.IsValid)
             {
-                form.Id = this.SetFormId(form.Id);
-                this.Session["CurrentSession"] = form;
-                return this.RedirectToAction("SaveForm", "Home", new { id = form.Id });
+                form.Guid = this.SetFormId(form.Guid);
+                using (this.formContext)
+                {
+                    this.formContext.Forms.Add(form);
+                    this.formContext.SaveChanges();
+                }
+
+                this.ViewBag.ListItems = this.fieldsType;
+
+                return this.RedirectToAction("SaveForm", "Home", new { id = form.Guid });
             }
             else
             {
@@ -42,7 +55,13 @@ namespace FormEditor.Controllers
 
         public ActionResult SaveForm(string id)
         {
-            var form = (Form)this.Session["CurrentSession"];
+            Form form = null;
+            using (this.formContext)
+            {
+                form = this.formContext.Forms.Include(o => o.Blocks).Where(o => o.Guid == id).ToList()[0];
+            }
+
+            this.ViewBag.ListItems = this.fieldsType;
             return this.View("Index", form);
         }
 

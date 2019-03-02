@@ -11,7 +11,7 @@
                 <h3><label for="header-form">Редактирование формы</label></h3>
                 <div class="col-md-7">
                     <div class="row form-group">
-                        @Html.HiddenFor(o=>o.Id)
+                        @Html.HiddenFor(o=>o.Guid)
                         @*<input type="text" aria-label="Large" name="Name" class="form-control" placeholder="Имя формы">*@
                         @Html.TextBoxFor(o => o.Name, new { @class = "form-control", placeholder = "Имя формы", name = "Name" })
                         @Html.ValidationMessageFor(o => o.Name, "", new { @style = "color:red" })
@@ -33,7 +33,7 @@
                                         @Html.ValidationMessageFor(o => o.Blocks[i].Header, "", new { @style = "color:red" })
                                     </div>
                                     <div class="col-md-5 select">
-                                        @Html.DropDownListFor(o => o.Blocks[i].SelectedTypeField, new SelectList(Model.Fields,"Value","Text",Model.Blocks[i].SelectedTypeField), new { @class= "custom-select", name= "Blocks[" + i + "].SelectedTypeField" })
+                                        @Html.EnumDropDownListFor(o => o.Blocks[i].FieldsType, new { @class= "custom-select", name= "Blocks[" + i + "].FieldsType" })
                                     </div>
                                     <div class="col">
                                         <div class="d-flex justify-content-end">
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="row form-group text-dark">
                                     <div class="col questEl">
-                                        @if ((Model.Blocks[i].SelectedTypeField) == "1" || (Model.Blocks[i].SelectedTypeField) == "2")
+                                        @if ((Model.Blocks[i].FieldsType) == FormEditor.Models.FieldsType.TextString || (Model.Blocks[i].FieldsType) == FormEditor.Models.FieldsType.Paragraph)
                                         {
                                             @Html.TextBoxFor(o => o.Blocks[i].TextField, new { @class = "form-control blockArea", name = "Blocks["+i+"].TextField", rows = "2", type = "text" })
                                         }

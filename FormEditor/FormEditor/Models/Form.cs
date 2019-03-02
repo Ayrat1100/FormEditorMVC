@@ -5,12 +5,28 @@
 namespace FormEditor.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
+
+    public enum FieldsType
+    {
+        [Display(Name ="Текст - строка")]
+        TextString = 1,
+        [Display(Name = "Текст - абзац")]
+        Paragraph = 2,
+        [Display(Name = "Один из списка")]
+        OneOfTheList = 3,
+        [Display(Name = "Несколько из списка")]
+        SeveralFromTheList = 4,
+        [Display(Name = "Раскрывающийся список")]
+        DropdownList = 5
+    }
 
     public class Form
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+
+        public string Guid { get; set; }
 
         [Required(ErrorMessage = "Поле обязательно для заполнения!")]
         public string Name { get; set; }
@@ -18,14 +34,5 @@ namespace FormEditor.Models
         public string Description { get; set; }
 
         public List<Block> Blocks { get; set; }
-
-        public List<SelectListItem> Fields { get; set; } = new List<SelectListItem>()
-                      {
-                          new SelectListItem { Value = "1", Text = "Текст - строка" },
-                          new SelectListItem { Value = "2", Text = "Текст - абзац" },
-                          new SelectListItem { Value = "3", Text = "Один из списка", Selected = true },
-                          new SelectListItem { Value = "4", Text = "Несколько из списка" },
-                          new SelectListItem { Value = "5", Text = "Раскрывающийся список" }
-                      };
     }
 }

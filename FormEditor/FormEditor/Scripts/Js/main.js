@@ -99,7 +99,7 @@ function RecalculateIndexes() {
 
     for (var i = blocks.length - 1; i >= 0; i--) {
         blocks[i].getElementsByClassName("form-control headerInput")[0].setAttribute("name", "Blocks[" + i +"].Header");
-        blocks[i].getElementsByClassName("custom-select")[0].setAttribute("name", "Blocks[" + i + "].SelectedTypeField");
+        blocks[i].getElementsByClassName("custom-select")[0].setAttribute("name", "Blocks[" + i + "].FieldsType");
         blocks[i].getElementsByClassName("form-control blockArea")[0].setAttribute("name", "Blocks[" + i + "].TextField");
         blocks[i].getElementsByClassName("checkboxMand")[0].setAttribute("name", "Blocks[" + i +"].Mandatory");
     }
