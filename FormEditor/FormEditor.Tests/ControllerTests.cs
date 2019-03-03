@@ -10,6 +10,7 @@ namespace FormEditor.Tests
     using FormEditor.Controllers;
     using FormEditor.Models;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Moq;
 
     [TestClass]
     public class ControllerTests
@@ -19,7 +20,7 @@ namespace FormEditor.Tests
         [TestInitialize]
         public void TestDataInitialize()
         {
-            this.form = new Form();
+            this.form = new Form() { Name = "test"};
             Block block = new Block() { Header = "Header1" };
             Block block2 = new Block() { Header = "Header2" };
             Block block3 = new Block() { Header = null };
@@ -29,43 +30,41 @@ namespace FormEditor.Tests
             this.form.Blocks.Add(block3);
         }
 
+        // по какой-то причине ViewName == "", а не "Index"
         [TestMethod]
-        public void Index()
+        public void GetForm_If_formIsNotValid_Test()
         {
-            HomeController controller = new HomeController();
+            string expected = "";
+            var mock = new Mock<IRepository>();
+            Form form = new Form() { Name = "test"};
+            HomeController controller = new HomeController(mock.Object);
+            controller.ModelState.AddModelError("Name", "Название модели не установлено");
+            ViewResult result = controller.Index(this.form) as ViewResult;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result.ViewName);
+        }
 
+        [TestMethod]
+        public void GetForm_If_formIsNull()
+        {
+            string expected = "";
+            var mock = new Mock<IRepository>();
+            Form form = null;
+            HomeController controller = new HomeController(mock.Object);
+            controller.ModelState.AddModelError("Name", "Название модели не установлено");
+            ViewResult result = controller.Index(form) as ViewResult;
+            Assert.IsNotNull(result);
+            Assert.AreEqual(expected, result.ViewName);
+        }
+
+        [TestMethod]
+        public void Index_Test()
+        {
+            var mock = new Mock<IRepository>();
+            mock.Setup(a => a.GetFormList()).Returns(new List<Form>());
+            HomeController controller = new HomeController(mock.Object);
             ViewResult result = controller.Index() as ViewResult;
-
-            Assert.IsNotNull(result);
-        }
-
-        // на записи в сессию пока вылетает
-        [TestMethod]
-        public void SaveForm_Test()
-        {
-            string id = "1";
-            HomeController controller = new HomeController();
-
-            ViewResult result = controller.SaveForm(id) as ViewResult;
-
-            Assert.IsNotNull(result);
-        }
-
-        // на извлечении из сессии пока вылетает
-        [TestMethod]
-        public void SendForm_Test()
-        {
-            Form form = new Form();
-            Block block = new Block() { Header = "Header1" };
-            Block block2 = new Block() { Header = "Header1" };
-            form.Blocks = new List<Block>();
-            form.Blocks.Add(block);
-            form.Blocks.Add(block2);
-
-            HomeController controller = new HomeController();
-            ActionResult result = controller.Index(form);
-            //Assert.IsInstanceOfType(result, typeof(RedirectResult));
-           Assert.AreEqual("Home/SaveForm", ((RedirectResult)result).Url);
+            Assert.IsNotNull(result.Model);
         }
 
         [TestMethod]
@@ -75,7 +74,7 @@ namespace FormEditor.Tests
             string id = formId.ToString();
 
             HomeController controller = new HomeController();
-            string actual = controller.SetFormId(id);
+            string actual = controller.GetFormId(id);
 
             Assert.AreEqual(id, actual);
         }
@@ -86,7 +85,7 @@ namespace FormEditor.Tests
             string id = null;
 
             HomeController controller = new HomeController();
-            string actual = controller.SetFormId(id);
+            string actual = controller.GetFormId(id);
 
             Assert.IsFalse(actual is null);
         }

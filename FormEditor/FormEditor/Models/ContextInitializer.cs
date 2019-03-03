@@ -28,9 +28,9 @@ namespace FormEditor.Models
             Block block4 = new Block { Header = "Block of form2", Mandatory = false, FieldsType = FieldsType.SeveralFromTheList, TextField = "block4text of form2", Form = form2 };
             Block block5 = new Block { Header = "Block of form2", Mandatory = true, FieldsType = FieldsType.TextString, TextField = "block5text of form2", Form = form2 };
 
-            Block block6 = new Block { Header = "Block of form1", Mandatory = false, FieldsType = FieldsType.OneOfTheList, TextField = "block1text of form3", Form = form3 };
-            Block block7 = new Block { Header = "Block of form1", Mandatory = false, FieldsType = FieldsType.TextString, TextField = "block2text of form3", Form = form3 };
-            Block block8 = new Block { Header = "Block of form1", Mandatory = true, FieldsType = FieldsType.Paragraph, TextField = "block2text of form3", Form = form3 };
+            Block block6 = new Block { Header = "Block of form3", Mandatory = false, FieldsType = FieldsType.OneOfTheList, TextField = "block1text of form3", Form = form3 };
+            Block block7 = new Block { Header = "Block of form3", Mandatory = false, FieldsType = FieldsType.TextString, TextField = "block2text of form3", Form = form3 };
+            Block block8 = new Block { Header = "Block of form3", Mandatory = true, FieldsType = FieldsType.Paragraph, TextField = "block2text of form3", Form = form3 };
 
             db.Blocks.AddRange(new List<Block> { block1, block2, block3, block4, block5, block6, block7, block8 });
             db.SaveChanges();

@@ -10,14 +10,13 @@ namespace FormEditor.Controllers
     using System.Linq;
     using System.Web.Mvc;
     using FormEditor.Models;
-    using FormContext = Models.FormContext;
 
     public class HomeController : Controller
     {
-        private readonly FieldsType fieldsType;
         private Form form;
-        private FormContext formContext = new FormContext();
+        private IRepository formRepository;
 
+        [ActionName("Index")]
         public ActionResult Index()
         {
             this.form = new Form();
@@ -25,7 +24,7 @@ namespace FormEditor.Controllers
             block.FieldsType = FieldsType.SeveralFromTheList;
             this.form.Blocks = new List<Block>();
             this.form.Blocks.Add(block);
-            this.ViewBag.ListItems = this.fieldsType;
+            this.ViewBag.ListItems = FieldsType.OneOfTheList;
 
             return this.View(this.form);
         }
@@ -33,19 +32,19 @@ namespace FormEditor.Controllers
         [HttpPost]
         public ActionResult Index(Form form)
         {
-            this.RemoveData(form);
-            if (this.ModelState.IsValid)
+            if (form != null)
             {
-                form.Guid = this.SetFormId(form.Guid);
-                using (this.formContext)
+                this.RemoveData(form);
+                if (this.ModelState.IsValid)
                 {
-                    this.formContext.Forms.Add(form);
-                    this.formContext.SaveChanges();
+                    form.Guid = this.GetFormId(form.Guid);
+                    this.formRepository.Create(form);
+                    this.formRepository.Save();
+                    this.ViewBag.ListItems = FieldsType.OneOfTheList;
+
+                    return this.RedirectToAction("GetForm", "Home", new { id = form.Guid });
                 }
-
-                this.ViewBag.ListItems = this.fieldsType;
-
-                return this.RedirectToAction("SaveForm", "Home", new { id = form.Guid });
+                return this.View(form);
             }
             else
             {
@@ -53,18 +52,18 @@ namespace FormEditor.Controllers
             }
         }
 
-        public ActionResult SaveForm(string id)
+        public ActionResult GetForm(string id)
         {
             Form form = null;
-            using (this.formContext)
-            {
-                form = this.formContext.Forms.Include(o => o.Blocks).Where(o => o.Guid == id).ToList()[0];
-            }
+            form = this.formRepository.GetForms().Include(o => o.Blocks).Where(o => o.Guid == id).ToList()[0];
 
-            this.ViewBag.ListItems = this.fieldsType;
             return this.View("Index", form);
         }
 
+        /// <summary>
+        /// Deleting data on the server after releting in view
+        /// </summary>
+        /// <param name="form">Current form</param>
         public void RemoveData(Form form)
         {
              for (int i = form.Blocks.Count - 1; i > 0; i--)
@@ -81,7 +80,7 @@ namespace FormEditor.Controllers
         /// </summary>
         /// <param name="formId">The current form id</param>
         /// <returns>Returned id of the current form</returns>
-        public string SetFormId(string formId)
+        public string GetFormId(string formId)
         {
             if (formId != null)
             {
@@ -92,6 +91,21 @@ namespace FormEditor.Controllers
                 Guid id = Guid.NewGuid();
                 return id.ToString();
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeController"/> class (for tests).
+        /// </summary>
+        /// <param name="repository">data rep.</param>
+        public HomeController(IRepository repository)
+        {
+            repository = new FormRepository();
+            this.formRepository = repository;
+        }
+
+        public HomeController()
+        {
+            this.formRepository = new FormRepository();
         }
     }
 }
