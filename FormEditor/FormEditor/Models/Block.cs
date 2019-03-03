@@ -20,6 +20,5 @@ namespace FormEditor.Models
         public Form Form { get; set; }
 
         public FieldsType FieldsType { get; set; }
-
     }
 }

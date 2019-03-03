@@ -1,4 +1,8 @@
-﻿namespace FormEditor
+﻿// <copyright file="IRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace FormEditor
 {
     using System;
     using System.Collections.Generic;

@@ -44,6 +44,7 @@ namespace FormEditor.Controllers
 
                     return this.RedirectToAction("GetForm", "Home", new { id = form.Guid });
                 }
+
                 return this.View(form);
             }
             else

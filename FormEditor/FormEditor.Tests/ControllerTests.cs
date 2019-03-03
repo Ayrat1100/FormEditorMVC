@@ -20,7 +20,7 @@ namespace FormEditor.Tests
         [TestInitialize]
         public void TestDataInitialize()
         {
-            this.form = new Form() { Name = "test"};
+            this.form = new Form() { Name = "test" };
             Block block = new Block() { Header = "Header1" };
             Block block2 = new Block() { Header = "Header2" };
             Block block3 = new Block() { Header = null };
@@ -34,9 +34,9 @@ namespace FormEditor.Tests
         [TestMethod]
         public void GetForm_If_formIsNotValid_Test()
         {
-            string expected = "";
+            string expected = string.Empty;
             var mock = new Mock<IRepository>();
-            Form form = new Form() { Name = "test"};
+            Form form = new Form() { Name = "test" };
             HomeController controller = new HomeController(mock.Object);
             controller.ModelState.AddModelError("Name", "Название модели не установлено");
             ViewResult result = controller.Index(this.form) as ViewResult;
@@ -47,7 +47,7 @@ namespace FormEditor.Tests
         [TestMethod]
         public void GetForm_If_formIsNull()
         {
-            string expected = "";
+            string expected = string.Empty;
             var mock = new Mock<IRepository>();
             Form form = null;
             HomeController controller = new HomeController(mock.Object);
