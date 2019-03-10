@@ -78,6 +78,10 @@
       <Project>{d429ea0f-ed4f-4d12-9da6-97a151c8f1c7}</Project>
       <Name>FormEditor</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Repository\FormEditor.Model.csproj">
+      <Project>{9DB8C4C4-B9F1-44D5-B269-ED79A68250C6}</Project>
+      <Name>FormEditor.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />

@@ -1,4 +1,8 @@
-﻿namespace FormEditorApi
+﻿// <copyright file="WebApiApplication.asax.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace FormEditorApi
 {
     using System.Web.Http;
 

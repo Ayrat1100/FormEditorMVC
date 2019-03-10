@@ -133,14 +133,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Models\FeldsType.cs" />
-    <Compile Include="Models\FormRepository.cs" />
-    <Compile Include="Models\IRepository.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Block.cs" />
-    <Compile Include="Models\ContextInitializer.cs" />
-    <Compile Include="Models\Form.cs" />
-    <Compile Include="Models\FormContext.cs" />
+    <Compile Include="Model\ContextInitializer.cs" />
+    <Compile Include="Model\FormContext.cs" />
+    <Compile Include="Model\FormRepository.cs" />
     <Compile Include="MvcApplication.asax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -261,6 +257,12 @@
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Repository\FormEditor.Model.csproj">
+      <Project>{9db8c4c4-b9f1-44d5-b269-ed79a68250c6}</Project>
+      <Name>FormEditor.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

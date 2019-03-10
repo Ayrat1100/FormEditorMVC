@@ -13,6 +13,7 @@ namespace FormEditorApi.Controllers
     using System.Net;
     using System.Text;
     using System.Web.Http;
+    using FormEditor.Models;
     using FormEditorApi.Models;
 
     public class FormsController : ApiController
@@ -36,13 +37,21 @@ namespace FormEditorApi.Controllers
 
         public Form GetFormData(string id)
         {
-            var formTable = this.dataContext.GetTable<Form>().Where(u => u.Guid == id).ToList()[0];
-            var blockTable = this.dataContext.GetTable<Block>().ToList();
+            if (this.dataContext.GetTable<Form>().Any(o => o.Guid == id))
+            {
+                var formTable = this.dataContext.GetTable<Form>().Where(u => u.Guid == id).ToList()[0];
+                var blockTable = this.dataContext.GetTable<Block>().ToList();
 
-            formTable.Blocks = blockTable.Where(o => o.Form_Id == formTable.Id).ToList();
-            this.AddInfo(formTable.Guid);
+                formTable.Blocks = blockTable.Where(o => o.Form_Id == formTable.Id).ToList();
+                this.AddInfo(formTable.Guid);
 
-            return formTable;
+                return formTable;
+            }
+            else
+            {
+                // Пока так
+                return null;
+            }
         }
 
         /// <summary>
@@ -51,7 +60,7 @@ namespace FormEditorApi.Controllers
         /// <param name="formId">Request form GUID</param>
         public void AddInfo(string formId)
         {
-            AuditInfo auditInfo = new AuditInfo() { FormId = formId, ClientIP = Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString(), RequestTime = DateTime.Now.ToLocalTime() };
+            AuditInfo auditInfo = new AuditInfo() { FormId = formId, ClientIP = Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString(), RequestTime = DateTime.Now.ToShortTimeString() };
             this.dataContext.GetTable<AuditInfo>().InsertOnSubmit(auditInfo);
             this.dataContext.SubmitChanges();
         }

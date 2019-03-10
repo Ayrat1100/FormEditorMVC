@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace FormEditorApi.Models
+namespace FormEditor.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

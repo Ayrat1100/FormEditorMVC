@@ -14,7 +14,7 @@ namespace FormEditorApi.Models
         public int Id { get; set; }
 
         [Column]
-        public DateTime RequestTime { get; set; }
+        public string RequestTime { get; set; }
 
         [Column]
         public string FormId { get; set; }
