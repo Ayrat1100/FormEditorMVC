@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace FormEditor.Controllers
+namespace FormEditor
 {
     using System;
     using System.Collections.Generic;
@@ -37,10 +37,17 @@ namespace FormEditor.Controllers
                 this.RemoveData(form);
                 if (this.ModelState.IsValid)
                 {
-                    form.Guid = this.GetFormId(form.Guid);
-                    this.formRepository.Create(form);
-                    this.formRepository.Save();
-                    this.ViewBag.ListItems = FieldsType.OneOfTheList;
+                    if (form.Guid == null)
+                    {
+                        form.Guid = this.GetFormId(form.Guid);
+
+                        this.formRepository.Create(form);
+                        this.formRepository.Save();
+                        this.ViewBag.ListItems = FieldsType.OneOfTheList;
+                    }
+                    else
+                    {
+                    }
 
                     return this.RedirectToAction("GetForm", "Home", new { id = form.Guid });
                 }
