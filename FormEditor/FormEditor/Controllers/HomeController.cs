@@ -67,13 +67,7 @@ namespace FormEditor.Controllers
         /// <param name="form">Current form</param>
         public void RemoveData(Form form)
         {
-             for (int i = form.Blocks.Count - 1; i > 0; i--)
-             {
-                 if (form.Blocks[i].Header == null)
-                 {
-                    form.Blocks.RemoveAt(i);
-                 }
-             }
+            form.Blocks.RemoveAll(o => string.IsNullOrEmpty(o.Header));
         }
 
         /// <summary>
@@ -83,7 +77,7 @@ namespace FormEditor.Controllers
         /// <returns>Returned id of the current form</returns>
         public string GetFormId(string formId)
         {
-            if (formId != null)
+            if (formId != null && formId != string.Empty)
             {
                 return formId;
             }

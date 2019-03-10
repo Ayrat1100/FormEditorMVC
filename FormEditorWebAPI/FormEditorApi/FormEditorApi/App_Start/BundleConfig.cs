@@ -1,8 +1,12 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿// <copyright file="BundleConfig.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace FormEditorApi
 {
+    using System.Web;
+    using System.Web.Optimization;
+
     public class BundleConfig
     {
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862

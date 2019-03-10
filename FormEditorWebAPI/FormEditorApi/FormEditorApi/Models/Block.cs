@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace FormEditor.Models
+namespace FormEditorApi.Models
 {
     using System.ComponentModel.DataAnnotations;
     using ColumnAttribute = System.Data.Linq.Mapping.ColumnAttribute;

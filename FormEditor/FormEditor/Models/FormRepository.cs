@@ -36,6 +36,7 @@ namespace FormEditor.Models
 
         public void Create(Form c)
         {
+
             this.db.Forms.Add(c);
         }
 

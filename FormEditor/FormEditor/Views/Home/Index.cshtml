@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="row form-group text-dark">
                                     <div class="col questEl">
-                                        @if ((Model.Blocks[i].FieldsType) == FormEditor.Models.FieldsType.TextString || (Model.Blocks[i].FieldsType) == FormEditor.Models.FieldsType.Paragraph)
+                                        @if ((Model.Blocks[i].FieldsType) == FieldsType.TextString || (Model.Blocks[i].FieldsType) == FieldsType.Paragraph)
                                         {
                                             @Html.TextBoxFor(o => o.Blocks[i].TextField, new { @class = "form-control blockArea", name = "Blocks["+i+"].TextField", rows = "2", type = "text" })
                                         }

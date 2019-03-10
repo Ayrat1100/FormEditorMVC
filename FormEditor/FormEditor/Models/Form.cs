@@ -8,20 +8,6 @@ namespace FormEditor.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    public enum FieldsType
-    {
-        [Display(Name ="Текст - строка")]
-        TextString = 1,
-        [Display(Name = "Текст - абзац")]
-        Paragraph = 2,
-        [Display(Name = "Один из списка")]
-        OneOfTheList = 3,
-        [Display(Name = "Несколько из списка")]
-        SeveralFromTheList = 4,
-        [Display(Name = "Раскрывающийся список")]
-        DropdownList = 5
-    }
-
     public class Form
     {
         public int Id { get; set; }
