@@ -13,20 +13,20 @@ namespace FormEditor
 
     public class HomeController : Controller
     {
-        private Form form;
         private IRepository formRepository;
 
         [ActionName("Index")]
         public ActionResult Index()
         {
-            this.form = new Form();
+            Form form;
+            form = new Form();
             Block block = new Block();
             block.FieldsType = FieldsType.SeveralFromTheList;
-            this.form.Blocks = new List<Block>();
-            this.form.Blocks.Add(block);
+            form.Blocks = new List<Block>();
+            form.Blocks.Add(block);
             this.ViewBag.ListItems = FieldsType.OneOfTheList;
 
-            return this.View(this.form);
+            return this.View(form);
         }
 
         [HttpPost]
@@ -47,9 +47,12 @@ namespace FormEditor
                     }
                     else
                     {
+                        this.formRepository.Delete(form.Id);
+                        this.formRepository.Create(form);
+                        this.formRepository.Save();
                     }
 
-                    return this.RedirectToAction("GetForm", "Home", new { id = form.Guid });
+                    return this.RedirectToAction("GetForm", "Home", new { guid = form.Guid });
                 }
 
                 return this.View(form);
@@ -60,10 +63,10 @@ namespace FormEditor
             }
         }
 
-        public ActionResult GetForm(string id)
+        public ActionResult GetForm(string guid)
         {
             Form form = null;
-            form = this.formRepository.GetForms().Include(o => o.Blocks).Where(o => o.Guid == id).ToList()[0];
+            form = this.formRepository.GetForms().Include(o => o.Blocks).Where(o => o.Guid == guid).ToList()[0];
 
             return this.View("Index", form);
         }
@@ -75,6 +78,9 @@ namespace FormEditor
         public void RemoveData(Form form)
         {
             form.Blocks.RemoveAll(o => string.IsNullOrEmpty(o.Header));
+            this.ModelState.Remove("Form");
+            this.ModelState.Clear();
+            this.ModelState.Remove("Block");
         }
 
         /// <summary>

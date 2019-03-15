@@ -187,12 +187,10 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Models\ContextInitializer.cs" />
     <Compile Include="Models\FormContext.cs" />
     <Compile Include="Models\FormRepository.cs" />
+    <Compile Include="MvcApplication.asax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Routing;
+﻿// <copyright file="Global.asax.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace FormEditor.Api
 {
+    using System.Web.Http;
+
     public class WebApiApplication : System.Web.HttpApplication
     {
         protected void Application_Start()

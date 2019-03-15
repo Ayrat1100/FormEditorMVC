@@ -11,6 +11,7 @@
                 <h3><label for="header-form">Редактирование формы</label></h3>
                 <div class="col-md-7">
                     <div class="row form-group">
+                        @Html.HiddenFor(o=>o.Id)
                         @Html.HiddenFor(o=>o.Guid)
                         @*<input type="text" aria-label="Large" name="Name" class="form-control" placeholder="Имя формы">*@
                         @Html.TextBoxFor(o => o.Name, new { @class = "form-control", placeholder = "Имя формы", name = "Name" })
@@ -25,45 +26,46 @@
                     <div class="formContainer">
                         @for (int i = 0; i < Model.Blocks.Count; i++)
                         {
-                        <div class="row form-group block">
-                            <dirow class="card card-body border-dark">
-                                <div class="row form-group text-dark">
-                                    <div class="col-md-5">
-                                        @Html.TextBoxFor(o => o.Blocks[i].Header, new { @class = "form-control headerInput", type = "text", placeholder = "Заголовок поля", name= "Blocks["+i+"].Header" })
-                                        @Html.ValidationMessageFor(o => o.Blocks[i].Header, "", new { @style = "color:red" })
-                                    </div>
-                                    <div class="col-md-5 select">
-                                        @Html.EnumDropDownListFor(o => o.Blocks[i].FieldsType, new { @class= "custom-select", name= "Blocks[" + i + "].FieldsType" })
-                                    </div>
-                                    <div class="col">
-                                        <div class="d-flex justify-content-end">
-                                            
-                                            <a class="delete" href="#"><img src="/Content/images/icons8-delete-filled.svg"  ></a>
+                            @Html.HiddenFor(o=>o.Id)
+                            <div class="row form-group block">
+                                <dirow class="card card-body border-dark">
+                                    <div class="row form-group text-dark">
+                                        <div class="col-md-5">
+                                            @Html.TextBoxFor(o => o.Blocks[i].Header, new { @class = "form-control headerInput", type = "text", placeholder = "Заголовок поля", name = "Blocks[" + i + "].Header" })
+                                            @Html.ValidationMessageFor(o => o.Blocks[i].Header, "", new { @style = "color:red" })
+                                        </div>
+                                        <div class="col-md-5 select">
+                                            @Html.EnumDropDownListFor(o => o.Blocks[i].FieldsType, new { @class = "custom-select", name = "Blocks[" + i + "].FieldsType" })
+                                        </div>
+                                        <div class="col">
+                                            <div class="d-flex justify-content-end">
+
+                                                <a class="delete" href="#"><img src="/Content/images/icons8-delete-filled.svg"></a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row form-group text-dark">
-                                    <div class="col questEl">
-                                        @if ((Model.Blocks[i].FieldsType) == FieldsType.TextString || (Model.Blocks[i].FieldsType) == FieldsType.Paragraph)
-                                        {
-                                            @Html.TextBoxFor(o => o.Blocks[i].TextField, new { @class = "form-control blockArea", name = "Blocks["+i+"].TextField", rows = "2", type = "text" })
-                                        }
-                                        else
-                                        {
-                                            @Html.TextAreaFor(o => o.Blocks[i].TextField, new { @class = "form-control blockArea", name = "Blocks[" + i + "].TextField", rows = "2" })
-                                        }
+                                    <div class="row form-group text-dark">
+                                        <div class="col questEl">
+                                            @if ((Model.Blocks[i].FieldsType) == FieldsType.TextString || (Model.Blocks[i].FieldsType) == FieldsType.Paragraph)
+                                            {
+                                                @Html.TextBoxFor(o => o.Blocks[i].TextField, new { @class = "form-control blockArea", name = "Blocks[" + i + "].TextField", rows = "2", type = "text" })
+                                            }
+                                            else
+                                            {
+                                                @Html.TextAreaFor(o => o.Blocks[i].TextField, new { @class = "form-control blockArea", name = "Blocks[" + i + "].TextField", rows = "2" })
+                                            }
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row check-style justify-content-end">
-                                    <div class="custom-control custom-checkbox">
-                                        <label>
-                                            @Html.CheckBoxFor(o => o.Blocks[i].Mandatory, new { @checked = "checked", @class = "checkboxMand", type = "checkbox",name= "Blocks["+i+"].Mandatory" })
-                                            Обязательный вопрос
-                                        </label>
+                                    <div class="row check-style justify-content-end">
+                                        <div class="custom-control custom-checkbox">
+                                            <label>
+                                                @Html.CheckBoxFor(o => o.Blocks[i].Mandatory, new { @checked = "checked", @class = "checkboxMand", type = "checkbox", name = "Blocks[" + i + "].Mandatory" })
+                                                Обязательный вопрос
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                            </dirow>
-                        </div>
+                                </dirow>
+                            </div>
                         }
                     </div>
                     <div class="row form-group justify-content-end">

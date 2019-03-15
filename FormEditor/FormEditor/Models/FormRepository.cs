@@ -41,7 +41,7 @@ namespace FormEditor.Models
 
         public void Update(Form c)
         {
-            this.db.Entry(c).State = EntityState.Modified;
+           // this.db.Entry(c).State = EntityState.Modified;
         }
 
         public void Delete(int id)
@@ -75,10 +75,6 @@ namespace FormEditor.Models
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
-        }
-
-        public void Edit(Form form)
-        {
         }
     }
 }

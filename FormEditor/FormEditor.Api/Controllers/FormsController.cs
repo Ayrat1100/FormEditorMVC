@@ -35,14 +35,14 @@ namespace FormEditorApi
             }
         }
 
-        public Form GetFormData(string id)
+        public Form GetFormData(int id)
         {
-            if (this.dataContext.GetTable<Form>().Any(o => o.Guid == id))
+            if (this.dataContext.GetTable<Form>().Any(o => o.Id == id))
             {
-                var formTable = this.dataContext.GetTable<Form>().Where(u => u.Guid == id).ToList()[0];
+                var formTable = this.dataContext.GetTable<Form>().Where(u => u.Id == id).ToList()[0];
                 var blockTable = this.dataContext.GetTable<Block>().ToList();
 
-                formTable.Blocks = blockTable.Where(o => o.Form_Id == formTable.Id).ToList();
+                formTable.Blocks = blockTable.Where(o => o.FormId == formTable.Id).ToList();
                 this.AddInfo(formTable.Guid);
 
                 return formTable;

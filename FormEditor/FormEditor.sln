@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormEditor.Model", "FormEdi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormEditor.Api", "FormEditor.Api\FormEditor.Api.csproj", "{D5F78CB7-ED50-4A10-9297-8F6A8F242A5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormEditor.Tests", "FormEditor.Tests\FormEditor.Tests.csproj", "{C5286B62-8719-4492-8424-4800D7092C52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D5F78CB7-ED50-4A10-9297-8F6A8F242A5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5F78CB7-ED50-4A10-9297-8F6A8F242A5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5F78CB7-ED50-4A10-9297-8F6A8F242A5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5286B62-8719-4492-8424-4800D7092C52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5286B62-8719-4492-8424-4800D7092C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5286B62-8719-4492-8424-4800D7092C52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5286B62-8719-4492-8424-4800D7092C52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

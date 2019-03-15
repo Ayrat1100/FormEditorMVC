@@ -23,8 +23,6 @@ namespace FormEditor
 
         void Delete(int id);
 
-        void Edit(Form form);
-
         void Save();
     }
 }

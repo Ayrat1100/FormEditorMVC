@@ -12,7 +12,8 @@ namespace FormEditor.Models
     public class Block
     {
         [Column]
-        public int BlockId { get; set; }
+        [Key]
+        public int Id { get; set; }
 
         [Column]
         [Required(ErrorMessage = "Поле обязательно для заполнения!")]
@@ -26,7 +27,7 @@ namespace FormEditor.Models
 
         [Column]
         [ForeignKey("Form")]
-        public int Form_Id { get; set; }
+        public int FormId { get; set; }
 
         public Form Form { get; set; }
 
