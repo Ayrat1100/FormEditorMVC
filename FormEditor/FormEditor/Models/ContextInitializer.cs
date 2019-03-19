@@ -17,9 +17,11 @@ namespace FormEditor.Models
                 Guid = Guid.NewGuid().ToString(), Name = "Test form1", Description = "Description of test form1", Blocks =
                 new List<Block>()
                 {
-                    new Block { Header = "Block of form1", Mandatory = true, FieldsType = FieldsType.Paragraph, TextField = "block1text of form1" },
-                    new Block { Header = "Block of form1", Mandatory = false, FieldsType = FieldsType.DropdownList, TextField = "block2text of form1", },
-                    new Block { Header = "Block of form1", Mandatory = true, FieldsType = FieldsType.Paragraph, TextField = "block2text of form1" }
+                    new Block { Header = "ФИО", Mandatory = true, FieldsType = FieldsType.TextString, TextField = "Введите ваше ФИО" },
+                    new Block { Header = "Биография", Mandatory = false, FieldsType = FieldsType.Paragraph, TextField = "О себе", },
+                    new Block { Header = "Возрастная группа", Mandatory = true, FieldsType = FieldsType.DropdownList, TextField = "20-25 26-30 31-35 >35" },
+                    new Block { Header = "Вид спорта", Mandatory = true, FieldsType = FieldsType.SeveralFromTheList, TextField = "теннис волейбол футбол" },
+                    new Block { Header = "Согласен на участие", Mandatory = true, FieldsType = FieldsType.OneOfTheList, TextField = "Да Нет" }
                 }
             };
             form1.Blocks[0].Form = form1;

@@ -13,6 +13,7 @@ namespace FormEditorApi
     using System.Net;
     using System.Text;
     using System.Web.Http;
+    using System.Web.Http.Cors;
     using FormEditor.Models;
     using FormEditorApi.Models;
 

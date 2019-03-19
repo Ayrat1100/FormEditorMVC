@@ -13,7 +13,6 @@
                     <div class="row form-group">
                         @Html.HiddenFor(o=>o.Id)
                         @Html.HiddenFor(o=>o.Guid)
-                        @*<input type="text" aria-label="Large" name="Name" class="form-control" placeholder="Имя формы">*@
                         @Html.TextBoxFor(o => o.Name, new { @class = "form-control", placeholder = "Имя формы", name = "Name" })
                         @Html.ValidationMessageFor(o => o.Name, "", new { @style = "color:red" })
                     </div>
