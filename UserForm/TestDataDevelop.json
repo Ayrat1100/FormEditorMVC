@@ -1,0 +1,53 @@
+{
+    "Id": 1,
+    "Guid": "3171623d-ad74-4f99-8fea-ddbc9ccf21f4",
+    "Name": "Test form1",
+    "Description": "Description of test form1",
+    "Blocks": [
+        {
+            "Id": 1,
+            "Header": "ФИО",
+            "TextField": "Введите ваше ФИО",
+            "Mandatory": true,
+            "FormId": 1,
+            "Form": null,
+            "FieldsType": 1
+        },
+        {
+            "Id": 2,
+            "Header": "Биография",
+            "TextField": "О себе",
+            "Mandatory": false,
+            "FormId": 1,
+            "Form": null,
+            "FieldsType": 2
+        },
+        {
+            "Id": 3,
+            "Header": "Возрастная группа",
+            "TextField": "20-25 26-30 31-35 >35",
+            "Mandatory": true,
+            "FormId": 1,
+            "Form": null,
+            "FieldsType": 5
+        },
+        {
+            "Id": 4,
+            "Header": "Вид спорта",
+            "TextField": "теннис волейбол футбол",
+            "Mandatory": true,
+            "FormId": 1,
+            "Form": null,
+            "FieldsType": 4
+        },
+        {
+            "Id": 5,
+            "Header": "Согласен на участие",
+            "TextField": "Да Нет",
+            "Mandatory": true,
+            "FormId": 1,
+            "Form": null,
+            "FieldsType": 3
+        }
+    ]
+}

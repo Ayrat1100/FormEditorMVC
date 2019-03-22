@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { HttpClientModule} from '@angular/common/http';
 import {Routes, RouterModule} from '@angular/router';
 import { FormComponent } from './form.component';
-
 const appRoutes: Routes =[
   { path: 'api/Forms/:id', component: FormComponent}
   
