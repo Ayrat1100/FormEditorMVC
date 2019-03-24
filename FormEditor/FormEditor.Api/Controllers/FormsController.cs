@@ -55,11 +55,18 @@ namespace FormEditorApi
             }
         }
 
-        /// <summary>
-        /// Adding query information to the audit info table
-        /// </summary>
-        /// <param name="formId">Request form GUID</param>
-        public void AddInfo(string formId)
+        [HttpPost]
+        [Route("GetFormUserForm")]
+        public object GetFormUserForm(object form)
+        {
+            return form;
+        }
+
+            /// <summary>
+            /// Adding query information to the audit info table
+            /// </summary>
+            /// <param name="formId">Request form GUID</param>
+            public void AddInfo(string formId)
         {
             AuditInfo auditInfo = new AuditInfo() { FormId = formId, ClientIP = Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString(), RequestTime = DateTime.Now.ToShortTimeString() };
             this.dataContext.GetTable<AuditInfo>().InsertOnSubmit(auditInfo);

@@ -1,9 +1,9 @@
 formApp.factory('dataService', function ($http, $q) {
     return {
-        getData: function () 
+        getData: function (path) 
         {
             var deferred = $q.defer();
-            $http({ method: 'GET', url: 'http://localhost:53662/api/Forms/1' }).
+            $http({ method: 'GET', url: 'http://localhost:53662/api'+path }).
                 then(function success(response) 
                 {
                     deferred.resolve(response.data);

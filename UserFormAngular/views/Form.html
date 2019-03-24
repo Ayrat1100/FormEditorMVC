@@ -1,0 +1,61 @@
+<div ng-controller="FormController" class="container">
+  <div class="col-md-8 offset-sm-2" >
+    <div >
+    <form name="userForm" ng-controller="SaveController" ng-submit="submit()">
+      <div class="form-container">
+        <div>
+          <h3>{{datas.Name}}</h3>
+        </div>
+        <div>
+          <h5>{{datas.Description}}</h5>
+        </div>
+        <div ng-repeat="dat in datas.Blocks">
+          <div ng-switch on="dat.FieldsType">
+            <div ng-switch-when="1" class="row form-group block" >
+              <div class="col-md-3">
+                <label>{{dat.Header}}</label>
+              </div>
+              <div class="col">
+                <input class="form-control" ng-model="form.text" placeholder="{{dat.TextField}}" validation-Data={{dat.Mandatory}}>
+              </div>
+            </div>
+            <div ng-switch-when="2" class="row form-group block">
+              <div class="col-md-3">
+                <label>{{dat.Header}}</label>
+              </div>
+              <div class="col">
+                <textarea class="form-control" ng-model="form.textAbout" placeholder="{{dat.textAbout}}" validation-Data={{dat.Mandatory}}></textarea>
+              </div>
+            </div>
+            <div ng-switch-when="3" class="row form-group block">
+              <div class="col-md-3">
+                <label>{{dat.Header}}</label>
+              </div>
+              <div class="col" radiostringto-Array='{{dat.TextField}}'>
+              </div>
+            </div>
+            <div ng-switch-when="4" class="row form-group block">
+              <div class="col-md-3">
+                <label>{{dat.Header}}</label>
+              </div>
+              <div class="col" chboxstringto-Array='{{dat.TextField}}'>
+              </div>
+            </div>
+            <div ng-switch-when="5" class="row form-group block">
+              <div class="col-md-3">
+                <label>{{dat.Header}}</label>
+              </div>
+              <div class="col">
+                <select class="form-control" ng-model="form.seldItem"  select-Category='{{dat.TextField}}'></select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-end">
+          <input  type="submit" id="submit" value="Отправить" class="btn btn-success">
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
