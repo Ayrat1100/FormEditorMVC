@@ -7,15 +7,14 @@ namespace FormEditorApi
     using System;
     using System.Configuration;
     using System.Data.Linq;
-    using System.Data.SqlClient;
-    using System.IO;
     using System.Linq;
-    using System.Net;
-    using System.Text;
+    using System.Net.Http;
+    using System.ServiceModel.Channels;
+    using System.Web;
     using System.Web.Http;
     using System.Web.Http.Cors;
+    using FormEditor.Api;
     using FormEditor.Models;
-    using FormEditorApi.Models;
 
     public class FormsController : ApiController
     {
@@ -25,24 +24,15 @@ namespace FormEditorApi
         public FormsController()
         {
             this.dataContext = new DataContext(this.connectionString);
-            using (SqlConnection connection = new SqlConnection(this.connectionString))
-            {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CreateAuditInfoTable.sql");
-                string query = @System.IO.File.ReadAllText(path, Encoding.GetEncoding(1251));
-                connection.Open();
-                SqlCommand command = new SqlCommand(query, connection);
-                command.ExecuteNonQuery();
-                command.Connection = connection;
-            }
+            ConnectionService.AuditDbConnect(this.connectionString);
         }
 
-        public Form GetFormData(int id)
+        public object GetFormData(int id)
         {
-            if (this.dataContext.GetTable<Form>().Any(o => o.Id == id))
+            var formTable = this.dataContext.GetTable<Form>().FirstOrDefault(u => u.Id == id);
+            if (formTable != null)
             {
-                var formTable = this.dataContext.GetTable<Form>().Where(u => u.Id == id).ToList()[0];
                 var blockTable = this.dataContext.GetTable<Block>().ToList();
-
                 formTable.Blocks = blockTable.Where(o => o.FormId == formTable.Id).ToList();
                 this.AddInfo(formTable.Guid);
 
@@ -50,14 +40,11 @@ namespace FormEditorApi
             }
             else
             {
-                // Пока так
-                return null;
+                return "Записи с идентификатором " + id + " не существует.";
             }
         }
 
-        [HttpPost]
-        [Route("GetFormUserForm")]
-        public object GetFormUserForm(object form)
+        public object PostUserForm([FromBody]object form)
         {
             return form;
         }
@@ -66,11 +53,34 @@ namespace FormEditorApi
             /// Adding query information to the audit info table
             /// </summary>
             /// <param name="formId">Request form GUID</param>
-            public void AddInfo(string formId)
+        public void AddInfo(string formId)
         {
-            AuditInfo auditInfo = new AuditInfo() { FormId = formId, ClientIP = Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString(), RequestTime = DateTime.Now.ToShortTimeString() };
+            AuditInfo auditInfo = new AuditInfo() { FormId = formId, ClientIP = this.GetClientIp(), RequestTime = DateTime.Now.ToShortTimeString() };
             this.dataContext.GetTable<AuditInfo>().InsertOnSubmit(auditInfo);
             this.dataContext.SubmitChanges();
+        }
+
+        private string GetClientIp(HttpRequestMessage request = null)
+        {
+            request = request ?? this.Request;
+
+            if (request.Properties.ContainsKey("MS_HttpContext"))
+            {
+                return ((HttpContextWrapper)request.Properties["MS_HttpContext"]).Request.UserHostAddress;
+            }
+            else if (request.Properties.ContainsKey(RemoteEndpointMessageProperty.Name))
+            {
+                RemoteEndpointMessageProperty prop = (RemoteEndpointMessageProperty)request.Properties[RemoteEndpointMessageProperty.Name];
+                return prop.Address;
+            }
+            else if (HttpContext.Current != null)
+            {
+                return HttpContext.Current.Request.UserHostAddress;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

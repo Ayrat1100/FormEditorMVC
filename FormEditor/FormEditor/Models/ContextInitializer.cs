@@ -2,11 +2,12 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace FormEditor.Models
+namespace FormEditor
 {
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using FormEditor.Models;
 
     public class ContextInitializer : DropCreateDatabaseAlways<FormContext>
     {

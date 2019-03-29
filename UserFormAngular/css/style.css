@@ -1,4 +1,24 @@
 .Label-class{
     vertical-align: middle;
-    margin-left: 10px;
+    margin-left: 15px;
+}
+.checkbox-class{
+    padding-left: 15px;
+}
+.error-msg{
+    color: rgb(212, 0, 0);
+}
+.form-header{
+    font-weight: bold;
+}
+.form-description{
+
+    font-weight: inherit;
+    margin-bottom: 30px;
+}
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.submit-container{
+    margin-bottom: 50px;
 }

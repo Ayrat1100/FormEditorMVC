@@ -63,10 +63,6 @@
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FormEditor.Model\FormEditor.Model.csproj">
-      <Project>{982b9d8f-05fa-412e-9a93-d080adc4849d}</Project>
-      <Name>FormEditor.Model</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FormEditor\FormEditor.csproj">
       <Project>{c870da81-4c9b-47c2-b7a8-5acf2a401bd8}</Project>
       <Name>FormEditor</Name>

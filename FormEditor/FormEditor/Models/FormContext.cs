@@ -2,9 +2,10 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace FormEditor.Models
+namespace FormEditor
 {
     using System.Data.Entity;
+    using FormEditor.Models;
 
     public class FormContext : DbContext
     {

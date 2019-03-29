@@ -1,61 +1,100 @@
 <div ng-controller="FormController" class="container">
-  <div class="col-md-8 offset-sm-2" >
-    <div >
-    <form name="userForm" ng-controller="SaveController" ng-submit="submit()">
-      <div class="form-container">
-        <div>
-          <h3>{{datas.Name}}</h3>
-        </div>
-        <div>
-          <h5>{{datas.Description}}</h5>
-        </div>
-        <div ng-repeat="dat in datas.Blocks">
-          <div ng-switch on="dat.FieldsType">
-            <div ng-switch-when="1" class="row form-group block" >
-              <div class="col-md-3">
-                <label>{{dat.Header}}</label>
+  <div class="col-md-8 offset-sm-2">
+    <div>
+      <form name="userForm"  ng-submit="save(form,userForm)">
+        <div class="form-container">
+          <div>
+            <h3 class="form-header">{{datas.Name}}</h3>
+          </div>
+          <div>
+            <h5 class="form-description">{{datas.Description}}</h5>
+          </div>
+          <div ng-repeat="dat in datas.Blocks">
+            <div ng-switch on="dat.FieldsType">
+              <!-- Text -->
+              <div ng-switch-when="1" class="row form-group block">
+                <div class="col-md-3">
+                  <label>{{dat.Header}}</label>
+                </div>
+                <div class="col" ng-if="dat.Mandatory">
+                  <input class="form-control" name="elem{{$index}}" ng-model="form['SimpleTextField_'+$index]"
+                    placeholder="{{dat.TextField}}" required>
+                  <p class="error-msg" ng-show="userForm.elem{{$index}}.$touched && userForm.elem{{$index}}.$invalid">
+                    Поле обязательно для заролнения!</p>
+                </div>
+                <div class="col" ng-if="!dat.Mandatory">
+                  <input class="form-control" name="elem{{$index}}" ng-model="form['SimpleTextField_'+$index]"
+                    placeholder="{{dat.TextField}}">
+                </div>
               </div>
-              <div class="col">
-                <input class="form-control" ng-model="form.text" placeholder="{{dat.TextField}}" validation-Data={{dat.Mandatory}}>
+              <!-- Text area -->
+              <div ng-switch-when="2" class="row form-group block">
+                <div class="col-md-3">
+                  <label>{{dat.Header}}</label>
+                </div>
+                <div class="col" ng-if="dat.Mandatory">
+                  <textarea class="form-control" name="elem{{$index}}" ng-model="form['textArea_'+$index]"
+                    placeholder="{{dat.TextField}}" required></textarea>
+                  <p class="error-msg" ng-show="userForm.elem{{$index}}.$touched && userForm.elem{{$index}}.$invalid">
+                    Поле обязательно для заролнения!</p>
+                </div>
+                <div class="col" ng-if="!dat.Mandatory">
+                  <textarea class="form-control" name="elem{{$index}}" ng-model="form['textArea_'+$index]"
+                    placeholder="{{dat.TextField}}"></textarea>
+                </div>
               </div>
-            </div>
-            <div ng-switch-when="2" class="row form-group block">
-              <div class="col-md-3">
-                <label>{{dat.Header}}</label>
+              <!-- radio btns. -->
+              <div ng-switch-when="3" class="row form-group block">
+                <div class="col-md-3">
+                  <label>{{dat.Header}}</label>
+                </div>
+                <div class="col">
+                  <div class="row" ng-init="form['SelectOne_'+dat.Id]=item"
+                    ng-repeat="item in dat.TextField.split(' ')">
+                    <label>
+                      <input class="Label-class" name="{{dat.Id}}" value="{{item}}" type="radio"
+                        ng-model="form['SelectOne_'+dat.Id]">
+                      {{item}}
+                    </label>
+                  </div>
+                </div>
               </div>
-              <div class="col">
-                <textarea class="form-control" ng-model="form.textAbout" placeholder="{{dat.textAbout}}" validation-Data={{dat.Mandatory}}></textarea>
+              <!-- checkB -->
+              <div ng-switch-when="4" class="row form-group block">
+                <div class="col-md-3">
+                  <label>{{dat.Header}}</label>
+                </div>
+                <div class="col">
+                  <div class="row" ng-repeat="item in dat.TextField.split(' ')">
+                    <label>
+                      <input class="Label-class" 
+                        name="{{item.Id}}" type="checkbox"
+                        ng-model="form['chboxitems'+dat.Id][$index]">
+                      {{item}}
+                    </label>
+                  </div>
+
+                </div>
               </div>
-            </div>
-            <div ng-switch-when="3" class="row form-group block">
-              <div class="col-md-3">
-                <label>{{dat.Header}}</label>
-              </div>
-              <div class="col" radiostringto-Array='{{dat.TextField}}'>
-              </div>
-            </div>
-            <div ng-switch-when="4" class="row form-group block">
-              <div class="col-md-3">
-                <label>{{dat.Header}}</label>
-              </div>
-              <div class="col" chboxstringto-Array='{{dat.TextField}}'>
-              </div>
-            </div>
-            <div ng-switch-when="5" class="row form-group block">
-              <div class="col-md-3">
-                <label>{{dat.Header}}</label>
-              </div>
-              <div class="col">
-                <select class="form-control" ng-model="form.seldItem"  select-Category='{{dat.TextField}}'></select>
+              <!-- sel. list -->
+              <div ng-switch-when="5" class="row form-group block">
+                <div class="col-md-3">
+                  <label>{{dat.Header}}</label>
+                </div>
+                <div class="col">
+                  <select ng-init="form['SelectedItem_'+$index] = dat.TextField.split(' ')[0]" class="form-control"
+                    name="SelectedItem" ng-model="form['SelectedItem_'+$index]"
+                    ng-options="i for i in dat.TextField.split(' ')">
+                  </select>
+                </div>
               </div>
             </div>
           </div>
+          <div class="row justify-content-end submit-container">
+            <input type="submit" id="submit" value="Отправить" class="btn btn-success">
+          </div>
         </div>
-        <div class="row justify-content-end">
-          <input  type="submit" id="submit" value="Отправить" class="btn btn-success">
-        </div>
-      </div>
-    </form>
+      </form>
     </div>
   </div>
 </div>

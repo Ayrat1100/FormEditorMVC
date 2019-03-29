@@ -2,12 +2,13 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace FormEditor.Models
+namespace FormEditor
 {
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using FormEditor.Models;
 
     public class FormRepository : IRepository
     {

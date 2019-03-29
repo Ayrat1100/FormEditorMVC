@@ -188,9 +188,19 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Migrations\201903290912125_InitialCreate.cs" />
+    <Compile Include="Migrations\201903290912125_InitialCreate.Designer.cs">
+      <DependentUpon>201903290912125_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Block.cs" />
+    <Compile Include="Models\CompletedForm.cs" />
     <Compile Include="Models\ContextInitializer.cs" />
+    <Compile Include="Models\FeldsType.cs" />
+    <Compile Include="Models\Form.cs" />
     <Compile Include="Models\FormContext.cs" />
     <Compile Include="Models\FormRepository.cs" />
+    <Compile Include="Models\IRepository.cs" />
     <Compile Include="MvcApplication.asax.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -223,17 +233,16 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FormEditor.Model\FormEditor.Model.csproj">
-      <Project>{982b9d8f-05fa-412e-9a93-d080adc4849d}</Project>
-      <Name>FormEditor.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201903290912125_InitialCreate.resx">
+      <DependentUpon>201903290912125_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
