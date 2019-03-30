@@ -6,10 +6,12 @@ namespace FormEditor.Models
 {
     using System;
 
-    public class CompletedForm
+    public class FilledForm
     {
-        public int FormId { get; set; }
+        public int Id { get; set; }
 
         public DateTime FilingDate { get; set; }
+
+        public string DataCSV { get; set; }
     }
 }

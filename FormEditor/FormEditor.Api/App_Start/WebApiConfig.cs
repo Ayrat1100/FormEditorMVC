@@ -12,10 +12,6 @@ namespace FormEditor.Api
     {
         public static void Register(HttpConfiguration config)
         {
-            var cors = new EnableCorsAttribute("http://localhost", "*", "*");
-            config.EnableCors(cors);
-            config.Formatters.Clear();
-            config.Formatters.Add(new JsonMediaTypeFormatter());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

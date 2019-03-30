@@ -7,19 +7,19 @@ namespace FormEditor
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
-    using FormEditor.Models;
 
-    public interface IRepository : IDisposable
+    public interface IRepository<T> : IDisposable
+        where T : class
     {
-        List<Form> GetFormList();
+        List<T> GetFormList();
 
-        Form GetForm(int id);
+        T GetForm(int id);
 
-        DbSet<Form> GetForms();
+        DbSet<T> GetForms();
 
-        void Create(Form item);
+        void Create(T item);
 
-        void Update(Form item);
+        void Update(T item);
 
         void Delete(int id);
 

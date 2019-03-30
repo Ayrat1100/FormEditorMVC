@@ -13,7 +13,22 @@ namespace FormEditor
 
     public class HomeController : Controller
     {
-        private IRepository formRepository;
+        private IRepository<Form> formRepository;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeController"/> class (for tests).
+        /// </summary>
+        /// <param name="repository">data rep.</param>
+        public HomeController(IRepository<Form> repository)
+        {
+            repository = new FormRepository();
+            this.formRepository = repository;
+        }
+
+        public HomeController()
+        {
+            this.formRepository = new FormRepository();
+        }
 
         [ActionName("Index")]
         public ActionResult Index()
@@ -99,21 +114,6 @@ namespace FormEditor
                 Guid id = Guid.NewGuid();
                 return id.ToString();
             }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HomeController"/> class (for tests).
-        /// </summary>
-        /// <param name="repository">data rep.</param>
-        public HomeController(IRepository repository)
-        {
-            repository = new FormRepository();
-            this.formRepository = repository;
-        }
-
-        public HomeController()
-        {
-            this.formRepository = new FormRepository();
         }
     }
 }

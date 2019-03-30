@@ -1,8 +1,10 @@
 <div ng-controller="FormController" class="container">
+    
   <div class="col-md-8 offset-sm-2">
     <div>
-      <form name="userForm"  ng-submit="save(form,userForm)">
+      <form name="userForm"  >
         <div class="form-container">
+            
           <div>
             <h3 class="form-header">{{datas.Name}}</h3>
           </div>
@@ -91,10 +93,14 @@
             </div>
           </div>
           <div class="row justify-content-end submit-container">
-            <input type="submit" id="submit" value="Отправить" class="btn btn-success">
+            <input type="submit" id="submit" value="Отправить" ng-click="save(form,userForm)" class="btn btn-success">
           </div>
         </div>
       </form>
+      
     </div>
   </div>
+</div>
+<div id="notes">
+  
 </div>

@@ -1,4 +1,4 @@
-﻿// <copyright file="FormRepository.cs" company="PlaceholderCompany">
+﻿// <copyright file="FillFormRepository.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -10,47 +10,47 @@ namespace FormEditor
     using System.Linq;
     using FormEditor.Models;
 
-    public class FormRepository : IRepository<Form>
+    public class FillFormRepository : IRepository<FilledForm>
     {
         private bool disposed = false;
         private FormContext db;
 
-        public FormRepository()
+        public FillFormRepository()
         {
             this.db = new FormContext();
         }
 
-        public List<Form> GetFormList()
+        public List<FilledForm> GetFormList()
         {
-            return this.db.Forms.ToList();
+            return this.db.CompletedForms.ToList();
         }
 
-        public DbSet<Form> GetForms()
+        public DbSet<FilledForm> GetForms()
         {
-            return this.db.Forms;
+            return this.db.CompletedForms;
         }
 
-        public Form GetForm(int id)
+        public FilledForm GetForm(int id)
         {
-            return this.db.Forms.Find(id);
+            return this.db.CompletedForms.Find(id);
         }
 
-        public void Create(Form c)
+        public void Create(FilledForm c)
         {
-            this.db.Forms.Add(c);
+            this.db.CompletedForms.Add(c);
         }
 
-        public void Update(Form c)
+        public void Update(FilledForm c)
         {
            // this.db.Entry(c).State = EntityState.Modified;
         }
 
         public void Delete(int id)
         {
-            Form c = this.db.Forms.Find(id);
+            FilledForm c = this.db.CompletedForms.Find(id);
             if (c != null)
             {
-                this.db.Forms.Remove(c);
+                this.db.CompletedForms.Remove(c);
             }
         }
 

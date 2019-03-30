@@ -1,6 +1,4 @@
 'use strict'
-var formContainer = document.getElementsByClassName('form-container')[0];
-
 formApp.controller('FormController',
     function FormController($scope, dataService, $location,  $http) {
         var promiseObj = dataService.getData($location.path());
@@ -8,13 +6,26 @@ formApp.controller('FormController',
             $scope.datas = value;
         });
 
-        $scope.form={};
+    $scope.form={};
     $scope.save = function (form,userForm){
         
         if(userForm.$valid){
             $http.post("http://localhost:53662/api/Forms/PostUserForm", form).then(function success (response) {
                 $scope.response=response.data;
-                alert();
+                if(response.data ==="Ok"){
+                    note({
+                        content: "<p>Ваши данные отправлены. Спасибо за заполнение формы!</p>",
+                        type: "success",
+                        time: 5
+                      });
+                }
+                else{
+                    note({
+                        content: "Ошибка при сохранении!",
+                        type: "error",
+                        time: 5
+                      });
+                }
             });
         }
     };

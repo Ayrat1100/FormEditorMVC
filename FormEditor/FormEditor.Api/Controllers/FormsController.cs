@@ -12,19 +12,27 @@ namespace FormEditorApi
     using System.ServiceModel.Channels;
     using System.Web;
     using System.Web.Http;
-    using System.Web.Http.Cors;
+    using FormEditor;
     using FormEditor.Api;
     using FormEditor.Models;
 
     public class FormsController : ApiController
     {
         private readonly string connectionString = ConfigurationManager.ConnectionStrings["FormContext"].ConnectionString;
+        private IRepository<FilledForm> repository;
         private DataContext dataContext;
 
         public FormsController()
         {
+            this.repository = new FillFormRepository();
             this.dataContext = new DataContext(this.connectionString);
             ConnectionService.AuditDbConnect(this.connectionString);
+        }
+
+        public FormsController(IRepository<FilledForm> repository)
+        {
+            repository = new FillFormRepository();
+            this.repository = repository;
         }
 
         public object GetFormData(int id)
@@ -46,7 +54,19 @@ namespace FormEditorApi
 
         public object PostUserForm([FromBody]object form)
         {
-            return form;
+            string csv = ProcessingData.JsonStringToTable(form.ToString());
+
+            if (csv != null || csv != string.Empty)
+            {
+                FilledForm filledForm = new FilledForm() { FilingDate = DateTime.Now, DataCSV = csv };
+                this.repository.Create(filledForm);
+                this.repository.Save();
+                return "Ok";
+            }
+            else
+            {
+                return "Bad";
+            }
         }
 
             /// <summary>

@@ -9,11 +9,6 @@ namespace FormEditor
 
     public class FormContext : DbContext
     {
-        static FormContext()
-        {
-            Database.SetInitializer(new ContextInitializer());
-        }
-
         public FormContext()
             : base("name=FormContext")
         {
@@ -23,5 +18,7 @@ namespace FormEditor
         public DbSet<Form> Forms { get; set; }
 
         public DbSet<Block> Blocks { get; set; }
+
+        public DbSet<FilledForm> CompletedForms { get; set; }
     }
 }
