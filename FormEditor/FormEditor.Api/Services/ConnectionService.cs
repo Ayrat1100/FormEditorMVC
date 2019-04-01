@@ -1,4 +1,8 @@
-﻿namespace FormEditor.Api
+﻿// <copyright file="ConnectionService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace FormEditor.Api
 {
     using System;
     using System.Data.SqlClient;

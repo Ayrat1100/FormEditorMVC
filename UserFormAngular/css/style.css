@@ -22,3 +22,6 @@ body{
 .submit-container{
     margin-bottom: 50px;
 }
+input.ng-touched.ng-invalid {
+    border-color: red;
+}

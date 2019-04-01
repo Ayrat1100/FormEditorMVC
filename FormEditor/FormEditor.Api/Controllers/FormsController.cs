@@ -54,11 +54,10 @@ namespace FormEditorApi
 
         public object PostUserForm([FromBody]object form)
         {
-            string csv = ProcessingData.JsonStringToTable(form.ToString());
-
-            if (csv != null || csv != string.Empty)
+            string[] formData = { ProcessingData.JsonStringToCSV(form.ToString()), ProcessingData.JsonStringToXml(form.ToString()) };
+            if (formData.Any(x => x != null || x != string.Empty))
             {
-                FilledForm filledForm = new FilledForm() { FilingDate = DateTime.Now, DataCSV = csv };
+                FilledForm filledForm = new FilledForm() { FilingDate = DateTime.Now, DataCSVFormat = formData[0], DataXmlFormat = formData[1] };
                 this.repository.Create(filledForm);
                 this.repository.Save();
                 return "Ok";

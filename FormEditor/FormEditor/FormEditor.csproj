@@ -204,6 +204,10 @@
     <Compile Include="Migrations\201903292108145_renamemodel.Designer.cs">
       <DependentUpon>201903292108145_renamemodel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904011900338_NewXmlDataColumn.cs" />
+    <Compile Include="Migrations\201904011900338_NewXmlDataColumn.Designer.cs">
+      <DependentUpon>201904011900338_NewXmlDataColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Block.cs" />
     <Compile Include="Models\FilledForm.cs" />
@@ -263,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903292108145_renamemodel.resx">
       <DependentUpon>201903292108145_renamemodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011900338_NewXmlDataColumn.resx">
+      <DependentUpon>201904011900338_NewXmlDataColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

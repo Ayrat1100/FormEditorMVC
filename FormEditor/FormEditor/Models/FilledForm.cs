@@ -12,6 +12,8 @@ namespace FormEditor.Models
 
         public DateTime FilingDate { get; set; }
 
-        public string DataCSV { get; set; }
+        public string DataCSVFormat { get; set; }
+
+        public string DataXmlFormat { get; set; }
     }
 }

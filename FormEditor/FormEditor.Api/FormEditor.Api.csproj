@@ -144,8 +144,8 @@
     <Compile Include="Models\AuditInfo.cs" />
     <Compile Include="Models\FillFormRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\ConnectionService.cs" />
-    <Compile Include="Service\ProcessingData.cs" />
+    <Compile Include="Services\ConnectionService.cs" />
+    <Compile Include="Services\ProcessingData.cs" />
     <Compile Include="WebApiApplication.asax.cs" />
   </ItemGroup>
   <ItemGroup>

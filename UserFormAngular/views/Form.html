@@ -2,7 +2,7 @@
     
   <div class="col-md-8 offset-sm-2">
     <div>
-      <form name="userForm"  >
+      <form name="userForm" class="userForm" novalidate>
         <div class="form-container">
             
           <div>
@@ -12,15 +12,16 @@
             <h5 class="form-description">{{datas.Description}}</h5>
           </div>
           <div ng-repeat="dat in datas.Blocks">
-            <div ng-switch on="dat.FieldsType">
-              <!-- Text -->
-              <div ng-switch-when="1" class="row form-group block">
+             
+            <div class="row" ng-switch on="dat.FieldsType">
                 <div class="col-md-3">
-                  <label>{{dat.Header}}</label>
-                </div>
-                <div class="col" ng-if="dat.Mandatory">
+                    <label>{{dat.Header}}</label>
+                  </div>
+              <!-- Text -->
+              <div ng-switch-when="1" col class="col form-group block">
+                <div class="col" ng-if="dat.Mandatory" ng-class="{'has-error':userForm.elem{{$index}}.$error.required}">
                   <input class="form-control" name="elem{{$index}}" ng-model="form['SimpleTextField_'+$index]"
-                    placeholder="{{dat.TextField}}" required>
+                    placeholder="{{dat.TextField}}" required >
                   <p class="error-msg" ng-show="userForm.elem{{$index}}.$touched && userForm.elem{{$index}}.$invalid">
                     Поле обязательно для заролнения!</p>
                 </div>
@@ -30,11 +31,8 @@
                 </div>
               </div>
               <!-- Text area -->
-              <div ng-switch-when="2" class="row form-group block">
-                <div class="col-md-3">
-                  <label>{{dat.Header}}</label>
-                </div>
-                <div class="col" ng-if="dat.Mandatory">
+              <div ng-switch-when="2" class="col form-group block">
+                <div class="col" ng-if="dat.Mandatory" ng-class="{'has-error':userForm.elem{{$index}}.$error.required}">
                   <textarea class="form-control" name="elem{{$index}}" ng-model="form['textArea_'+$index]"
                     placeholder="{{dat.TextField}}" required></textarea>
                   <p class="error-msg" ng-show="userForm.elem{{$index}}.$touched && userForm.elem{{$index}}.$invalid">
@@ -46,10 +44,7 @@
                 </div>
               </div>
               <!-- radio btns. -->
-              <div ng-switch-when="3" class="row form-group block">
-                <div class="col-md-3">
-                  <label>{{dat.Header}}</label>
-                </div>
+              <div ng-switch-when="3" class="col form-group block">
                 <div class="col">
                   <div class="row" ng-init="form['SelectOne_'+dat.Id]=item"
                     ng-repeat="item in dat.TextField.split(' ')">
@@ -62,10 +57,7 @@
                 </div>
               </div>
               <!-- checkB -->
-              <div ng-switch-when="4" class="row form-group block">
-                <div class="col-md-3">
-                  <label>{{dat.Header}}</label>
-                </div>
+              <div ng-switch-when="4" class="col form-group block">
                 <div class="col">
                   <div class="row" ng-repeat="item in dat.TextField.split(' ')">
                     <label>
@@ -79,10 +71,7 @@
                 </div>
               </div>
               <!-- sel. list -->
-              <div ng-switch-when="5" class="row form-group block">
-                <div class="col-md-3">
-                  <label>{{dat.Header}}</label>
-                </div>
+              <div ng-switch-when="5" class="col form-group block">
                 <div class="col">
                   <select ng-init="form['SelectedItem_'+$index] = dat.TextField.split(' ')[0]" class="form-control"
                     name="SelectedItem" ng-model="form['SelectedItem_'+$index]"
